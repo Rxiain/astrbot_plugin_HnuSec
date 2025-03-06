@@ -1,6 +1,7 @@
 import asyncio
 import json
 import aiohttp
+from .template import *
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
@@ -16,13 +17,24 @@ class CTFPlugin(Star):
     @filter.command("赛事播报")
     async def ctf_events(self, event: AstrMessageEvent):
         """获取最新CTF赛事信息"""
+        # yield event.plain_result("⏳ 正在获取赛事信息...")
         data = await self.fetch_data()
         if not data or not data.get("success"):
             yield event.plain_result("⛔ 暂时无法获取赛事信息")
             return
         
         formatted_text = self.format_competitions(data)
-        yield event.plain_result(formatted_text)
+        # try:
+        #     url = await self.html_render(CTF_MATCH_TMPL, data)
+        # except Exception:
+        #     url = None
+        
+        # if not url:
+        #     yield event.plain_result("⚠️ 赛事信息生成图片失败，仅提供文字版")
+        #     yield event.plain_result(formatted_text)
+        # else:
+        #     yield event.image_result(url)
+        yield event.image_result(formatted_text)
 
     async def background_check(self):
         """后台定时检测任务"""
