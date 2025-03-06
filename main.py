@@ -29,7 +29,7 @@ class CTFPlugin(Star):
         # except Exception:
         #     url = None
         
-        # if not url:
+        # if not url: 
         #     yield event.plain_result("⚠️ 赛事信息生成图片失败，仅提供文字版")
         #     yield event.plain_result(formatted_text)
         # else:
